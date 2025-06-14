@@ -145,6 +145,116 @@ private static void actualizarLibro() {
 
     Book libro = library.get(indice - 1);
 }
+//------------------------------------
+private static void eliminarLibro() {
+    System.out.println("\\n--- 🗑️ ELIMINAR LIBRO ---");
+
+    if (library.isEmpty()) {
+        System.out.println("❌ No hay libros para eliminar.");
+        return;
+    }
+
+    mostrarLibrosConIndices();
+
+    System.out.print("Seleccione el número del libro a eliminar: ");
+    int indice = scanner.nextInt();
+    scanner.nextLine();
+
+    if (indice < 1 || indice > library.size()) {
+        System.out.println("❌ Índice no válido.");
+        return;
+    }
+
+    Book libro = library.get(indice - 1);
+    System.out.println("¿Está seguro de que desea eliminar el libro '" + libro.getTitle() + "'? (sí/no)");
+    String confirmacion = scanner.nextLine();
+
+    if (confirmacion.equalsIgnoreCase("s") || confirmacion.equalsIgnoreCase("si")) {
+        library.remove(indice - 1);
+        System.out.println("✅ Libro eliminado exitosamente!");
+    } else {
+        System.out.println("❌ Eliminación cancelada.");
+    }
+}
+
+// --------------------------------------------------
+
+private static void buscarLibro() {
+    System.out.println("\\n--- 🔍 BUSCAR LIBRO ---");
+    System.out.println("Buscar por:");
+    System.out.println("1. Título");
+    System.out.println("2. Autor");
+    System.out.println("3. ISBN");
+    System.out.print("Opción: ");
+
+    int opcion = scanner.nextInt();
+    scanner.nextLine();
+
+    System.out.print("Término de búsqueda: ");
+
+    String termino = scanner.nextLine().toLowerCase();
+
+    List<Book> resultados = new ArrayList<>();
+
+    for (Book libro : library) {
+        switch (opcion) {
+            case 1: // Título
+                if (libro.getTitle().toLowerCase().contains(termino)) {
+                    resultados.add(libro);
+                }
+                break;
+            case 2: // Autor
+                if (libro.getAuthors().stream().anyMatch(a -> a.toLowerCase().contains(termino))) {
+                    resultados.add(libro);
+                }
+                break;
+            case 3: // ISBN
+                if (libro.getIsbn().toLowerCase().contains(termino)) {
+                    resultados.add(libro);
+                }
+                break;
+            default:
+                System.out.println("❌ Opción no válida.");
+                return;
+        }
+    }
+
+    if (resultados.isEmpty()) {
+        System.out.println("🔍 No se encontraron resultados.");
+    } else {
+        System.out.println("🔍 Resultados de búsqueda:");
+        for (Book libro : resultados) {
+            System.out.println(libro.toString());
+        }
+    }
+}
+
+// ...existing code...
+private static void estadisticasBiblioteca() {
+    System.out.println("\\n--- 📊 ESTADÍSTICAS DE LA BIBLIOTECA ---");
+
+    if (library.isEmpty()) {
+        System.out.println("❌ No hay libros en la biblioteca.");
+        return;
+    }
+
+    int totalLibros = library.size();
+    int librosLeidos = 0;
+    int totalHoras = 0;
+
+    for (Book libro : library) {
+        if (libro.isReaded()) {
+            librosLeidos++;
+            totalHoras += libro.getTimeReaded();
+        }
+    }
+
+    System.out.println("Total de libros: " + totalLibros);
+    System.out.println("Libros leídos: " + librosLeidos);
+    System.out.println("Horas totales de lectura: " + totalHoras);
+    System.out.println("Promedio de horas por libro leído: " + (librosLeidos > 0 ? (double) totalHoras / librosLeidos : 0.0));
+}
+
 
 
 }

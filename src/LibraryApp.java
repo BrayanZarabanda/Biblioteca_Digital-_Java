@@ -255,6 +255,19 @@ private static void estadisticasBiblioteca() {
     System.out.println("Promedio de horas por libro leído: " + (librosLeidos > 0 ? (double) totalHoras / librosLeidos : 0.0));
 }
 
+private static void initializeLibrary() {
+    Book book1 = new Book("Effective Java", "2018-01-01", "Addison-Wesley", "978-0134686097");
+    book1.getAuthors().add("Joshua Bloch");
+    book1.setReaded(true);
+    book1.setTimeReaded(10);
+    library.add(book1);
+
+    Book book2 = new Book("Clean Code", "2008-08-01", "Prentice Hall", "978-0132350884");
+    book2.getAuthors().add("Robert C. Martin");
+    book2.setReaded(false);
+    book2.setTimeReaded(0);
+    library.add(book2);
+}
 
 
 }

@@ -17,11 +17,30 @@ public class LibraryApp {
         do {
             mostrarMenu();
             option = scanner.nextInt();
-            scanner.nextLine(); // Clear buffer
+            scanner.nextLine(); 
 
             switch (option) {
                 case 1:
-                    System.out.println("Crear libro - En desarrollo");
+                    crearLibro();
+                    break;
+                case 2:
+                    leerLibros();
+                    break;
+                case 3:
+                    actualizarLibro();;
+                    break;
+                case 4:
+                    eliminarLibro();;
+                    break;
+                case 5:
+                    buscarLibro();
+                    break;
+
+                case 6:
+                    estadisticasBiblioteca();
+                    break;
+                case 7:
+                    mostrarTablaLibros(library);
                     break;
                 case 0:
                     System.out.println("¡Gracias por usar la biblioteca!");
@@ -38,6 +57,12 @@ private static void mostrarMenu() {
     System.out.println("           BIBLIOTECA DIGITAL");
     System.out.println("═══════════════════════════════════════");
     System.out.println("1. ➕ Crear nuevo libro");
+    System.out.println("2. 📚 Leer libros");
+    System.out.println("3. ✏️ Actualizar libro");
+    System.out.println("4. 🗑️ Eliminar libro");
+    System.out.println("5. 🔍 Buscar libro");
+    System.out.println("6. 📊 Estadísticas de la biblioteca");
+    System.out.println("7. 📖 Mostrar tabla de libros");    
     System.out.println("0. 🚪 Salir");
     System.out.println("═══════════════════════════════════════");
     System.out.print("Seleccione una opción: ");
@@ -108,8 +133,14 @@ private static void mostrarTablaLibros(List<Book> libros) {
     System.out.println("├──────────────────────────────────────┼─────────────┼──────────────────┼─────────────────┼──────────────────────────────┼────────┼─────────────┤");
 
     for (Book book : libros) {
-        // Formatear y mostrar cada libro
-        // TODO: Implementar formato completo
+        System.out.printf("│ %-36s │ %-11s │ %-16s │ %-15s │ %-28s │ %-6s │ %-11s │%n",
+                book.getTitle(),
+                book.getEdititionDate(),
+                book.getEditorial(),
+                book.getIsbn(),
+                String.join(", ", book.getAuthors()),
+                book.isReaded() ? "Sí" : "No",
+                book.getTimeReaded() > 0 ? book.getTimeReaded() + " hrs" : "N/A");
     }
 
     System.out.println("└──────────────────────────────────────┴─────────────┴──────────────────┴─────────────────┴──────────────────────────────┴────────┴─────────────┘");
@@ -143,7 +174,7 @@ private static void actualizarLibro() {
         return;
     }
 
-    Book libro = library.get(indice - 1);
+    Book ibro = library.get(indice - 1);
 }
 //------------------------------------
 private static void eliminarLibro() {
@@ -255,7 +286,7 @@ private static void estadisticasBiblioteca() {
     System.out.println("Promedio de horas por libro leído: " + (librosLeidos > 0 ? (double) totalHoras / librosLeidos : 0.0));
 }
 
-private static void initializeLibrary() {
+private static void initialize1Library() {
     Book book1 = new Book("Effective Java", "2018-01-01", "Addison-Wesley", "978-0134686097");
     book1.getAuthors().add("Joshua Bloch");
     book1.setReaded(true);
